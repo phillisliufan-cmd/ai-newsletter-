@@ -5,7 +5,6 @@ import ArticleCard from "@/components/ArticleCard";
 import CategoryFilter from "@/components/CategoryFilter";
 import Navbar from "@/components/Navbar";
 import { Article } from "@/lib/supabase";
-import Link from "next/link";
 
 const PAGE_SIZE = 18;
 
