@@ -9,18 +9,15 @@ const SOURCE_LABELS: Record<string, string> = {
   paperswithcode: "Papers With Code",
   reddit: "Reddit",
   arxiv: "arXiv",
-  // 大模型公司博客
   openai: "OpenAI",
   deepmind: "DeepMind",
   huggingface: "HuggingFace",
   microsoft: "Microsoft AI",
-  // 科技媒体
   venturebeat: "VentureBeat",
   techcrunch: "TechCrunch",
   theverge: "The Verge",
   mit_review: "MIT Tech Review",
   arstechnica: "Ars Technica",
-  // Newsletter 博主
   simon_willison: "Simon Willison",
   tldr_ai: "TLDR AI",
   import_ai: "Import AI",
@@ -31,48 +28,66 @@ const SOURCE_LABELS: Record<string, string> = {
   rundown_ai: "The Rundown AI",
 };
 
+// Color of the small source label text
 const SOURCE_COLORS: Record<string, string> = {
-  hackernews:    "bg-orange-500/20 text-orange-400 border-orange-500/30",
-  reddit:        "bg-red-500/20 text-red-400 border-red-500/30",
-  arxiv:         "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
-  paperswithcode:"bg-blue-500/20 text-blue-400 border-blue-500/30",
-  // 公司博客 — 紫色系
-  openai:        "bg-purple-500/20 text-purple-300 border-purple-500/30",
-  deepmind:      "bg-purple-500/20 text-purple-300 border-purple-500/30",
-  huggingface:   "bg-yellow-500/20 text-yellow-400 border-yellow-500/30",
-  microsoft:     "bg-blue-500/20 text-blue-300 border-blue-500/30",
-  // 科技媒体 — 青色系
-  venturebeat:   "bg-cyan-500/20 text-cyan-400 border-cyan-500/30",
-  techcrunch:    "bg-cyan-500/20 text-cyan-400 border-cyan-500/30",
-  theverge:      "bg-cyan-500/20 text-cyan-400 border-cyan-500/30",
-  mit_review:    "bg-cyan-500/20 text-cyan-400 border-cyan-500/30",
-  arstechnica:   "bg-cyan-500/20 text-cyan-400 border-cyan-500/30",
-  // Newsletter — 粉色系
-  simon_willison:"bg-pink-500/20 text-pink-400 border-pink-500/30",
-  tldr_ai:       "bg-pink-500/20 text-pink-400 border-pink-500/30",
-  import_ai:     "bg-pink-500/20 text-pink-400 border-pink-500/30",
-  ai_news:       "bg-pink-500/20 text-pink-400 border-pink-500/30",
-  ai_edge:       "bg-pink-500/20 text-pink-400 border-pink-500/30",
-  bens_bites:    "bg-pink-500/20 text-pink-400 border-pink-500/30",
-  deeplearning_ai:"bg-pink-500/20 text-pink-400 border-pink-500/30",
+  hackernews:     "text-orange-600",
+  reddit:         "text-red-600",
+  arxiv:          "text-emerald-700",
+  paperswithcode: "text-blue-600",
+  openai:         "text-violet-700",
+  deepmind:       "text-blue-700",
+  huggingface:    "text-yellow-700",
+  microsoft:      "text-blue-600",
+  venturebeat:    "text-cyan-700",
+  techcrunch:     "text-green-700",
+  theverge:       "text-red-700",
+  mit_review:     "text-indigo-700",
+  arstechnica:    "text-orange-700",
+  simon_willison: "text-pink-700",
+  tldr_ai:        "text-pink-600",
+  import_ai:      "text-pink-700",
+  ai_news:        "text-rose-600",
+  ai_edge:        "text-purple-700",
+  bens_bites:     "text-amber-700",
+  deeplearning_ai:"text-teal-700",
+  rundown_ai:     "text-fuchsia-700",
 };
 
 const CATEGORY_COLORS: Record<string, string> = {
-  LLM: "bg-purple-500/20 text-purple-400",
-  视觉: "bg-cyan-500/20 text-cyan-400",
-  工具: "bg-emerald-500/20 text-emerald-400",
-  研究: "bg-amber-500/20 text-amber-400",
-  应用: "bg-rose-500/20 text-rose-400",
+  LLM:  "bg-violet-100 text-violet-700",
+  视觉:  "bg-cyan-100 text-cyan-700",
+  工具:  "bg-emerald-100 text-emerald-700",
+  研究:  "bg-amber-100 text-amber-700",
+  应用:  "bg-rose-100 text-rose-700",
+};
+
+// Gradient covers by category (since articles have no images)
+const CATEGORY_GRADIENTS: Record<string, string> = {
+  LLM:  "from-violet-50 to-purple-100",
+  视觉:  "from-cyan-50 to-blue-100",
+  工具:  "from-emerald-50 to-green-100",
+  研究:  "from-amber-50 to-yellow-100",
+  应用:  "from-rose-50 to-pink-100",
+};
+
+const SOURCE_GRADIENTS: Record<string, string> = {
+  hackernews:  "from-orange-50 to-amber-100",
+  reddit:      "from-red-50 to-orange-100",
+  arxiv:       "from-emerald-50 to-teal-100",
+  openai:      "from-violet-50 to-purple-100",
+  deepmind:    "from-blue-50 to-indigo-100",
+  huggingface: "from-yellow-50 to-amber-100",
 };
 
 type Props = {
   article: Article;
   featured?: boolean;
+  large?: boolean;
 };
 
-export default function ArticleCard({ article, featured = false }: Props) {
+export default function ArticleCard({ article, featured = false, large = false }: Props) {
   const summary = article.summary_zh
-    ? article.summary_zh.slice(0, 100) + (article.summary_zh.length > 100 ? "…" : "")
+    ? article.summary_zh.slice(0, large ? 200 : 120) + (article.summary_zh.length > (large ? 200 : 120) ? "…" : "")
     : "摘要生成中…";
 
   const timeAgo = article.published_at || article.created_at
@@ -82,66 +97,77 @@ export default function ArticleCard({ article, featured = false }: Props) {
       })
     : "";
 
+  const gradient =
+    (article.category && CATEGORY_GRADIENTS[article.category]) ||
+    SOURCE_GRADIENTS[article.source] ||
+    "from-gray-50 to-slate-100";
+
   return (
     <article
       className={`
-        group relative flex flex-col gap-3 rounded-xl border border-gray-800 bg-gray-900/50 p-5
-        card-hover cursor-pointer
-        ${featured ? "border-purple-800/50 bg-purple-950/20" : ""}
+        group flex flex-col bg-white rounded-2xl border border-gray-100 overflow-hidden
+        card-hover cursor-pointer shadow-sm
+        ${featured ? "ring-2 ring-blue-100" : ""}
       `}
     >
-      {featured && (
-        <span className="absolute top-3 right-3 text-xs font-semibold text-purple-400 bg-purple-500/10 border border-purple-500/30 rounded-full px-2 py-0.5">
-          精选
+      {/* Cover gradient */}
+      <div className={`bg-gradient-to-br ${gradient} ${large ? "h-48" : "h-32"} w-full flex items-center justify-center`}>
+        <span className="text-4xl opacity-30 select-none">
+          {article.category === "LLM" ? "🧠" :
+           article.category === "视觉" ? "👁️" :
+           article.category === "工具" ? "🔧" :
+           article.category === "研究" ? "📄" :
+           article.category === "应用" ? "⚡" : "📡"}
         </span>
-      )}
-
-      {/* 来源 + 分类 */}
-      <div className="flex items-center gap-2 flex-wrap">
-        <span
-          className={`badge border ${SOURCE_COLORS[article.source] || "bg-gray-700 text-gray-300"}`}
-        >
-          {SOURCE_LABELS[article.source] || article.source}
-        </span>
-        {article.category && (
-          <span className={`badge ${CATEGORY_COLORS[article.category] || "bg-gray-700 text-gray-400"}`}>
-            {article.category}
-          </span>
-        )}
-        {article.score > 0 && (
-          <span className="text-xs text-gray-500">▲ {article.score.toLocaleString()}</span>
-        )}
       </div>
 
-      {/* 标题 */}
-      <a
-        href={article.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="font-heading font-semibold text-gray-100 leading-snug group-hover:text-purple-300 transition-colors duration-150 line-clamp-2"
-        onClick={(e) => e.stopPropagation()}
-      >
-        {article.title}
-      </a>
-
-      {/* 摘要 */}
-      <p className="text-sm text-gray-400 leading-relaxed line-clamp-3">{summary}</p>
-
-      {/* 标签 + 时间 */}
-      <div className="flex items-end justify-between gap-2 mt-auto pt-1">
-        <div className="flex flex-wrap gap-1">
-          {(article.tags || []).slice(0, 3).map((tag) => (
-            <span
-              key={tag}
-              className="text-xs text-gray-500 bg-gray-800 px-2 py-0.5 rounded"
-            >
-              {tag}
+      {/* Content */}
+      <div className="flex flex-col gap-2.5 p-5 flex-1">
+        {/* Source + Category row */}
+        <div className="flex items-center gap-2 flex-wrap">
+          <span className={`text-xs font-semibold uppercase tracking-wide ${SOURCE_COLORS[article.source] || "text-gray-500"}`}>
+            {SOURCE_LABELS[article.source] || article.source}
+          </span>
+          {article.category && (
+            <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${CATEGORY_COLORS[article.category] || "bg-gray-100 text-gray-600"}`}>
+              {article.category}
             </span>
-          ))}
+          )}
+          {article.score > 0 && (
+            <span className="ml-auto text-xs text-gray-400">▲ {article.score.toLocaleString()}</span>
+          )}
         </div>
-        {timeAgo && (
-          <span className="text-xs text-gray-600 shrink-0">{timeAgo}</span>
-        )}
+
+        {/* Title */}
+        <a
+          href={article.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`font-heading font-semibold text-gray-900 leading-snug group-hover:text-blue-600 transition-colors duration-150 line-clamp-2 ${large ? "text-xl" : "text-base"}`}
+          onClick={(e) => e.stopPropagation()}
+        >
+          {article.title}
+        </a>
+
+        {/* Summary */}
+        <p className={`text-gray-500 leading-relaxed ${large ? "text-sm line-clamp-4" : "text-xs line-clamp-3"}`}>{summary}</p>
+
+        {/* Tags + time */}
+        <div className="flex items-end justify-between gap-2 mt-auto pt-2">
+          <div className="flex flex-wrap gap-1">
+            {(article.tags || []).slice(0, 3).map((tag) => (
+              <span
+                key={tag}
+                className="text-xs text-gray-400 bg-gray-100 px-2 py-0.5 rounded"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+          {timeAgo && (
+            <span className="text-xs text-gray-400 shrink-0">{timeAgo}</span>
+          )}
+        </div>
       </div>
     </article>
   );

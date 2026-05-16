@@ -32,9 +32,9 @@ export default function CategoryFilter({
   onSourceChange,
 }: Props) {
   return (
-    <div className="flex flex-wrap items-center gap-3">
-      {/* 分类标签 */}
-      <div className="flex flex-wrap gap-2">
+    <div className="flex flex-wrap items-center gap-3 border-b border-gray-200 pb-4">
+      {/* 分类 tab */}
+      <div className="flex flex-wrap gap-1">
         {CATEGORIES.map((cat) => {
           const value = cat === "全部" ? "" : cat;
           const active = selectedCategory === value;
@@ -42,10 +42,10 @@ export default function CategoryFilter({
             <button
               key={cat}
               onClick={() => onCategoryChange(value)}
-              className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors duration-150 ${
+              className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors duration-150 ${
                 active
-                  ? "bg-purple-600 text-white"
-                  : "bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-gray-200"
+                  ? "bg-blue-600 text-white"
+                  : "bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-gray-900"
               }`}
             >
               {cat}
@@ -58,7 +58,7 @@ export default function CategoryFilter({
       <select
         value={selectedSource}
         onChange={(e) => onSourceChange(e.target.value)}
-        className="ml-auto bg-gray-800 border border-gray-700 text-gray-300 text-sm rounded-lg px-3 py-1.5 focus:outline-none focus:border-purple-500"
+        className="ml-auto bg-white border border-gray-200 text-gray-700 text-sm rounded-lg px-3 py-1.5 focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-200"
       >
         {SOURCES.map((s) => (
           <option key={s.value} value={s.value}>

@@ -29,38 +29,38 @@ export default function Navbar() {
   const displayName = email.split("@")[0];
 
   return (
-    <nav className="border-b border-gray-800/50 bg-[#0a0a0a]/80 backdrop-blur-sm sticky top-0 z-50">
+    <nav className="border-b border-gray-200 bg-white sticky top-0 z-50">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between h-14">
-        <Link href="/" className="font-heading font-bold text-lg text-gradient">
-          AI Newsletter
+        <Link href="/" className="font-heading font-bold text-lg text-gray-900 tracking-tight">
+          AI <span className="text-blue-600">Newsletter</span>
         </Link>
 
-        <div className="flex items-center gap-4">
-          <Link href="/browse" className="text-sm text-gray-400 hover:text-gray-200 transition-colors">
-            浏览项目
+        <div className="flex items-center gap-6">
+          <Link href="/browse" className="text-sm text-gray-600 hover:text-gray-900 transition-colors font-medium">
+            浏览资讯
           </Link>
 
           {loading ? (
-            <div className="w-16 h-7 bg-gray-800 rounded animate-pulse" />
+            <div className="w-16 h-7 bg-gray-100 rounded animate-pulse" />
           ) : user ? (
-            <div className="flex items-center gap-3">
-              <span className="text-sm text-gray-400">
-                👤 <span className="text-gray-200">{displayName}</span>
+            <div className="flex items-center gap-4">
+              <span className="text-sm text-gray-500">
+                {displayName}
               </span>
               <button
                 onClick={handleLogout}
-                className="text-sm text-gray-500 hover:text-gray-300 transition-colors"
+                className="text-sm text-gray-400 hover:text-gray-700 transition-colors"
               >
                 退出
               </button>
             </div>
           ) : (
             <>
-              <Link href="/auth/login" className="text-sm text-gray-400 hover:text-gray-200 transition-colors">
+              <Link href="/auth/login" className="text-sm text-gray-600 hover:text-gray-900 transition-colors font-medium">
                 登录
               </Link>
-              <Link href="/auth/register" className="btn-primary text-sm py-1.5">
-                注册
+              <Link href="/auth/register" className="btn-primary text-sm py-1.5 px-4">
+                订阅
               </Link>
             </>
           )}
