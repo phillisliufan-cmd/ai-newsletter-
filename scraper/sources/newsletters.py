@@ -5,7 +5,7 @@
 import requests
 import xml.etree.ElementTree as ET
 import re
-from datetime import timezone
+from datetime import datetime, timezone, timedelta
 from email.utils import parsedate_to_datetime
 from typing import Optional
 
@@ -84,9 +84,21 @@ def _parse_feed(url: str, source: str, label: str, max_items: int) -> list[dict]
 
 def fetch_newsletter_articles(max_per_source: int = 8) -> list[dict]:
     all_articles = []
+    # 只保留 30 天内的文章
+    cutoff = datetime.now(timezone.utc) - timedelta(days=30)
     for feed in NEWSLETTER_SOURCES:
         items = _parse_feed(feed["url"], feed["source"], feed["label"], max_per_source)
-        print(f"  [{feed['label']}] {len(items)} 篇")
-        all_articles.extend(items)
+        fresh = []
+        for a in items:
+            if a.get("published_at"):
+                try:
+                    pub = datetime.fromisoformat(a["published_at"])
+                    if pub < cutoff:
+                        continue
+                except Exception:
+                    pass
+            fresh.append(a)
+        print(f"  [{feed['label']}] {len(fresh)} 篇（过滤后）")
+        all_articles.extend(fresh)
     print(f"[Newsletters] 共获取 {len(all_articles)} 篇")
     return all_articles
