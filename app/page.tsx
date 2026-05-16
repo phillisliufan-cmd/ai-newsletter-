@@ -2,6 +2,7 @@ import { createAnonClient } from "@/lib/supabase";
 import ArticleCard from "@/components/ArticleCard";
 import SubscribeForm from "@/components/SubscribeForm";
 import Navbar from "@/components/Navbar";
+import DailyDigest from "@/components/DailyDigest";
 import Link from "next/link";
 
 export const dynamic = 'force-dynamic';
@@ -17,8 +18,22 @@ async function getFeaturedArticles() {
   return data || [];
 }
 
+async function getTodayDigest() {
+  const supabase = createAnonClient();
+  const { data } = await supabase
+    .from("daily_digests")
+    .select("*")
+    .order("date", { ascending: false })
+    .limit(1)
+    .single();
+  return data || null;
+}
+
 export default async function HomePage() {
-  const articles = await getFeaturedArticles();
+  const [articles, digest] = await Promise.all([
+    getFeaturedArticles(),
+    getTodayDigest(),
+  ]);
 
   return (
     <main className="min-h-screen">
@@ -74,6 +89,9 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* 今日 AI 要点综合 */}
+      <DailyDigest digest={digest} />
 
       {/* 今日精选 */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 py-12">

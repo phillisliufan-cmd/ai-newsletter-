@@ -30,7 +30,7 @@ def fetch_item(item_id: int) -> Optional[dict]:
         return None
 
 
-def fetch_hackernews_articles(limit: int = 50) -> list[dict]:
+def fetch_hackernews_articles(limit: int = 200) -> list[dict]:
     """获取 HackerNews top stories 前 limit 条，过滤 AI 相关"""
     try:
         resp = requests.get(f"{HN_BASE}/topstories.json", timeout=15)
