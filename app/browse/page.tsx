@@ -100,7 +100,7 @@ export default function BrowsePage() {
   const toggleExpand = (source: string) => {
     setExpandedSources((prev) => {
       const next = new Set(prev);
-      next.has(source) ? next.delete(source) : next.add(source);
+      if (next.has(source)) { next.delete(source); } else { next.add(source); }
       return next;
     });
   };
