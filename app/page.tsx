@@ -27,15 +27,22 @@ async function getFeaturedArticles() {
 
 async function getLatestArticles() {
   const supabase = createAnonClient();
-  // 最近 3 天、有图片的文章，按时间倒序
-  const since = new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString();
+  const since = new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString();
   const { data } = await supabase
     .from("articles")
     .select("*")
     .gte("created_at", since)
     .order("created_at", { ascending: false })
-    .limit(60);
-  return (data || []).filter((a) => a.image_url && a.image_url.startsWith("http")).slice(0, 4);
+    .limit(100);
+  // 过滤：有图 + published_at 在14天内（或无 published_at）
+  const cutoff = Date.now() - 14 * 24 * 60 * 60 * 1000;
+  return (data || [])
+    .filter((a) => {
+      if (!a.image_url || !a.image_url.startsWith("http")) return false;
+      if (a.published_at && new Date(a.published_at).getTime() < cutoff) return false;
+      return true;
+    })
+    .slice(0, 4);
 }
 
 async function getTodayDigest() {
