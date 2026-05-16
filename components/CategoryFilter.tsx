@@ -4,8 +4,18 @@ const CATEGORIES = ["全部", "LLM", "视觉", "工具", "研究", "应用"];
 const SOURCES = [
   { value: "", label: "全部来源" },
   { value: "hackernews", label: "Hacker News" },
-  { value: "paperswithcode", label: "Papers With Code" },
-  { value: "github", label: "GitHub" },
+  { value: "reddit", label: "Reddit" },
+  { value: "arxiv", label: "arXiv 论文" },
+  { value: "openai", label: "OpenAI Blog" },
+  { value: "deepmind", label: "DeepMind Blog" },
+  { value: "huggingface", label: "HuggingFace" },
+  { value: "venturebeat", label: "VentureBeat" },
+  { value: "techcrunch", label: "TechCrunch" },
+  { value: "theverge", label: "The Verge" },
+  { value: "mit_review", label: "MIT Tech Review" },
+  { value: "tldr_ai", label: "TLDR AI" },
+  { value: "import_ai", label: "Import AI" },
+  { value: "simon_willison", label: "Simon Willison" },
 ];
 
 type Props = {

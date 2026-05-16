@@ -5,19 +5,56 @@ import { formatDistanceToNow } from "date-fns";
 import { zhCN } from "date-fns/locale";
 
 const SOURCE_LABELS: Record<string, string> = {
-  hackernews: "HN",
-  paperswithcode: "PWC",
-  github: "GitHub",
+  hackernews: "Hacker News",
+  paperswithcode: "Papers With Code",
   reddit: "Reddit",
   arxiv: "arXiv",
+  // 大模型公司博客
+  openai: "OpenAI",
+  deepmind: "DeepMind",
+  huggingface: "HuggingFace",
+  microsoft: "Microsoft AI",
+  // 科技媒体
+  venturebeat: "VentureBeat",
+  techcrunch: "TechCrunch",
+  theverge: "The Verge",
+  mit_review: "MIT Tech Review",
+  arstechnica: "Ars Technica",
+  // Newsletter 博主
+  simon_willison: "Simon Willison",
+  tldr_ai: "TLDR AI",
+  import_ai: "Import AI",
+  ai_news: "AI News",
+  ai_edge: "The AI Edge",
+  bens_bites: "Ben's Bites",
+  deeplearning_ai: "DeepLearning.AI",
+  rundown_ai: "The Rundown AI",
 };
 
 const SOURCE_COLORS: Record<string, string> = {
-  hackernews: "bg-orange-500/20 text-orange-400 border-orange-500/30",
-  paperswithcode: "bg-blue-500/20 text-blue-400 border-blue-500/30",
-  github: "bg-gray-500/20 text-gray-400 border-gray-500/30",
-  reddit: "bg-red-500/20 text-red-400 border-red-500/30",
-  arxiv: "bg-green-500/20 text-green-400 border-green-500/30",
+  hackernews:    "bg-orange-500/20 text-orange-400 border-orange-500/30",
+  reddit:        "bg-red-500/20 text-red-400 border-red-500/30",
+  arxiv:         "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
+  paperswithcode:"bg-blue-500/20 text-blue-400 border-blue-500/30",
+  // 公司博客 — 紫色系
+  openai:        "bg-purple-500/20 text-purple-300 border-purple-500/30",
+  deepmind:      "bg-purple-500/20 text-purple-300 border-purple-500/30",
+  huggingface:   "bg-yellow-500/20 text-yellow-400 border-yellow-500/30",
+  microsoft:     "bg-blue-500/20 text-blue-300 border-blue-500/30",
+  // 科技媒体 — 青色系
+  venturebeat:   "bg-cyan-500/20 text-cyan-400 border-cyan-500/30",
+  techcrunch:    "bg-cyan-500/20 text-cyan-400 border-cyan-500/30",
+  theverge:      "bg-cyan-500/20 text-cyan-400 border-cyan-500/30",
+  mit_review:    "bg-cyan-500/20 text-cyan-400 border-cyan-500/30",
+  arstechnica:   "bg-cyan-500/20 text-cyan-400 border-cyan-500/30",
+  // Newsletter — 粉色系
+  simon_willison:"bg-pink-500/20 text-pink-400 border-pink-500/30",
+  tldr_ai:       "bg-pink-500/20 text-pink-400 border-pink-500/30",
+  import_ai:     "bg-pink-500/20 text-pink-400 border-pink-500/30",
+  ai_news:       "bg-pink-500/20 text-pink-400 border-pink-500/30",
+  ai_edge:       "bg-pink-500/20 text-pink-400 border-pink-500/30",
+  bens_bites:    "bg-pink-500/20 text-pink-400 border-pink-500/30",
+  deeplearning_ai:"bg-pink-500/20 text-pink-400 border-pink-500/30",
 };
 
 const CATEGORY_COLORS: Record<string, string> = {
