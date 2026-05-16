@@ -86,12 +86,9 @@ export default async function HomePage() {
             由 Claude AI 生成中文摘要，帮你高效跟踪 AI 前沿进展。
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-            <Link href="/browse" className="btn-primary text-base px-7 py-3">
+          <div className="flex items-center justify-center">
+            <Link href="/browse" className="btn-primary text-base px-8 py-3">
               浏览全部资讯 →
-            </Link>
-            <Link href="/auth/register" className="btn-ghost text-base px-7 py-3">
-              订阅每日精选
             </Link>
           </div>
 

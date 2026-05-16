@@ -42,32 +42,29 @@ export default function SubscribeForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 w-full max-w-md">
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="your@email.com"
-        required
-        className="flex-1 bg-gray-900 border border-gray-700 text-gray-200 placeholder-gray-500 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-purple-500 transition-colors"
-      />
-      <button
-        type="submit"
-        disabled={status === "loading"}
-        className="btn-primary whitespace-nowrap disabled:opacity-60 disabled:cursor-not-allowed"
-      >
-        {status === "loading" ? "订阅中…" : "免费订阅"}
-      </button>
-
-      {message && (
-        <p
-          className={`sm:col-span-2 text-sm mt-1 ${
-            status === "success" ? "text-emerald-400" : "text-rose-400"
-          }`}
+    <div className="w-full max-w-md">
+      <form onSubmit={handleSubmit} className="flex gap-2">
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="your@email.com"
+          required
+          className="flex-1 bg-white border border-gray-300 text-gray-900 placeholder-gray-400 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-200 transition-colors"
+        />
+        <button
+          type="submit"
+          disabled={status === "loading"}
+          className="btn-primary whitespace-nowrap disabled:opacity-60 disabled:cursor-not-allowed"
         >
+          {status === "loading" ? "订阅中…" : "免费订阅"}
+        </button>
+      </form>
+      {message && (
+        <p className={`text-sm mt-2 ${status === "success" ? "text-emerald-600" : "text-rose-500"}`}>
           {message}
         </p>
       )}
-    </form>
+    </div>
   );
 }
