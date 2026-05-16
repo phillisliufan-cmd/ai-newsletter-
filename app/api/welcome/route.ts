@@ -51,15 +51,20 @@ export async function POST(request: NextRequest) {
 </html>`
 
   try {
-    await resend.emails.send({
+    const { data, error: resendError } = await resend.emails.send({
       from,
       to: email,
       subject: '欢迎订阅 AI Newsletter！',
       html,
     })
-    return NextResponse.json({ success: true })
+    if (resendError) {
+      console.error('[Welcome email] Resend error:', resendError)
+      return NextResponse.json({ error: resendError.message }, { status: 500 })
+    }
+    console.log('[Welcome email] Sent:', data?.id)
+    return NextResponse.json({ success: true, id: data?.id })
   } catch (err) {
-    console.error('[Welcome email]', err)
+    console.error('[Welcome email] Exception:', err)
     return NextResponse.json({ error: 'Failed to send' }, { status: 500 })
   }
 }
