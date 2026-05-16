@@ -18,6 +18,18 @@ async function getFeaturedArticles() {
   return data || [];
 }
 
+async function getLatestArticles() {
+  const supabase = createAnonClient();
+  const { data } = await supabase
+    .from("articles")
+    .select("*")
+    .not("image_url", "is", null)
+    .neq("image_url", "")
+    .order("created_at", { ascending: false })
+    .limit(4);
+  return data || [];
+}
+
 async function getTodayDigest() {
   const supabase = createAnonClient();
   const { data } = await supabase
@@ -30,9 +42,10 @@ async function getTodayDigest() {
 }
 
 export default async function HomePage() {
-  const [articles, digest] = await Promise.all([
+  const [articles, digest, latest] = await Promise.all([
     getFeaturedArticles(),
     getTodayDigest(),
+    getLatestArticles(),
   ]);
 
   const [hero, ...rest] = articles;
@@ -136,6 +149,28 @@ export default async function HomePage() {
           </div>
         )}
       </section>
+
+      {/* 最新配图文章 */}
+      {latest.length > 0 && (
+        <section className="border-t border-gray-100 bg-gray-50/50">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
+            <div className="flex items-center justify-between mb-8">
+              <div>
+                <h2 className="font-heading text-2xl font-bold text-gray-900">最新资讯</h2>
+                <p className="text-sm text-gray-400 mt-1">来自 Newsletter 博主和 AI 媒体</p>
+              </div>
+              <Link href="/browse" className="text-sm text-blue-600 hover:text-blue-700 font-medium transition-colors">
+                查看全部 →
+              </Link>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+              {latest.map((article) => (
+                <ArticleCard key={article.id} article={article} />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* 来源展示 */}
       <section className="border-t border-gray-100 bg-gray-50">
