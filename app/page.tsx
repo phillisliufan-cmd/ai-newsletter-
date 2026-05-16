@@ -72,26 +72,16 @@ export default async function HomePage() {
       {/* Hero */}
       <section className="border-b border-gray-100 bg-gradient-to-b from-blue-50/40 to-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-16 pb-14 text-center">
-          <p className="text-xs font-semibold text-blue-600 uppercase tracking-widest mb-4">
-            每日更新 · Claude AI 驱动摘要
-          </p>
-
-          <h1 className="font-heading text-5xl sm:text-6xl font-extrabold text-gray-900 leading-tight mb-5 tracking-tight">
+          <h1 className="font-heading text-5xl sm:text-6xl font-extrabold text-gray-900 leading-tight mb-8 tracking-tight">
             精选 AI 资讯<br />
             <span className="text-gradient">每日送达</span>
           </h1>
-
-          <p className="text-lg text-gray-500 max-w-2xl mx-auto mb-10 leading-relaxed">
-            自动聚合 Hacker News、arXiv、各大 AI 媒体最新动态，
-            由 Claude AI 生成中文摘要，帮你高效跟踪 AI 前沿进展。
-          </p>
 
           <div className="flex items-center justify-center">
             <Link href="/browse" className="btn-primary text-base px-8 py-3">
               浏览全部资讯 →
             </Link>
           </div>
-
         </div>
       </section>
 
