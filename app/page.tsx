@@ -92,22 +92,6 @@ export default async function HomePage() {
             </Link>
           </div>
 
-          <div className="flex items-center justify-center gap-10 mt-12 text-sm text-gray-400">
-            <div className="flex flex-col items-center gap-1">
-              <span className="text-2xl font-bold text-gray-800">15+</span>
-              <span>数据来源</span>
-            </div>
-            <div className="w-px h-10 bg-gray-200" />
-            <div className="flex flex-col items-center gap-1">
-              <span className="text-2xl font-bold text-gray-800">每日</span>
-              <span>自动更新</span>
-            </div>
-            <div className="w-px h-10 bg-gray-200" />
-            <div className="flex flex-col items-center gap-1">
-              <span className="text-2xl font-bold text-gray-800">5</span>
-              <span>分类标签</span>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -183,18 +167,6 @@ export default async function HomePage() {
           </div>
         </section>
       )}
-
-      {/* 来源展示 */}
-      <section className="border-t border-gray-100 bg-gray-50">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10">
-          <p className="text-center text-xs font-semibold text-gray-400 uppercase tracking-widest mb-6">数据来源</p>
-          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm text-gray-400 font-medium">
-            {["Hacker News", "arXiv", "Reddit", "OpenAI", "DeepMind", "HuggingFace", "VentureBeat", "TechCrunch", "The Verge", "MIT Tech Review", "Simon Willison", "TLDR AI"].map((s) => (
-              <span key={s}>{s}</span>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* 订阅区 */}
       <section className="border-t border-gray-100">
