@@ -9,24 +9,29 @@ export const dynamic = 'force-dynamic';
 
 async function getFeaturedArticles() {
   const supabase = createAnonClient();
+  // 取最近100篇，前端按"有图优先 + 高分"混排
   const { data, error } = await supabase
     .from("articles")
     .select("*")
-    .order("score", { ascending: false })
-    .limit(7);
+    .order("created_at", { ascending: false })
+    .limit(100);
   if (error) console.error("[getFeaturedArticles] error:", error);
-  return data || [];
+  const articles = data || [];
+  const withImage = articles.filter((a) => a.image_url && a.image_url.startsWith("http"));
+  const withoutImage = articles.filter((a) => !a.image_url || !a.image_url.startsWith("http"))
+    .sort((a, b) => b.score - a.score);
+  // 最多4张有图 + 填满到7篇
+  const result = [...withImage.slice(0, 4), ...withoutImage].slice(0, 7);
+  return result;
 }
 
 async function getLatestArticles() {
   const supabase = createAnonClient();
-  // 取最近文章，前端再过滤有图的
   const { data } = await supabase
     .from("articles")
     .select("*")
     .order("created_at", { ascending: false })
     .limit(40);
-  // 只保留有真实图片的
   return (data || []).filter((a) => a.image_url && a.image_url.startsWith("http")).slice(0, 4);
 }
 
