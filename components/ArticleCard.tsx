@@ -110,16 +110,31 @@ export default function ArticleCard({ article, featured = false, large = false }
         ${featured ? "ring-2 ring-blue-100" : ""}
       `}
     >
-      {/* Cover gradient */}
-      <div className={`bg-gradient-to-br ${gradient} ${large ? "h-48" : "h-32"} w-full flex items-center justify-center`}>
-        <span className="text-4xl opacity-30 select-none">
-          {article.category === "LLM" ? "🧠" :
-           article.category === "视觉" ? "👁️" :
-           article.category === "工具" ? "🔧" :
-           article.category === "研究" ? "📄" :
-           article.category === "应用" ? "⚡" : "📡"}
-        </span>
-      </div>
+      {/* Cover: real image or gradient fallback */}
+      {article.image_url ? (
+        <div className={`${large ? "h-48" : "h-32"} w-full overflow-hidden`}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={article.image_url}
+            alt={article.title}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            onError={(e) => {
+              // hide broken image, show gradient fallback via parent
+              (e.target as HTMLImageElement).style.display = "none";
+            }}
+          />
+        </div>
+      ) : (
+        <div className={`bg-gradient-to-br ${gradient} ${large ? "h-48" : "h-32"} w-full flex items-center justify-center`}>
+          <span className="text-4xl opacity-30 select-none">
+            {article.category === "LLM" ? "🧠" :
+             article.category === "视觉" ? "👁️" :
+             article.category === "工具" ? "🔧" :
+             article.category === "研究" ? "📄" :
+             article.category === "应用" ? "⚡" : "📡"}
+          </span>
+        </div>
+      )}
 
       {/* Content */}
       <div className="flex flex-col gap-2.5 p-5 flex-1">

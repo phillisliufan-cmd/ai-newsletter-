@@ -18,6 +18,7 @@ from sources.ai_news_rss import fetch_ai_news_articles
 from sources.newsletters import fetch_newsletter_articles
 from processor import process_unanalyzed_articles
 from daily_digest import generate_daily_digest
+from fetch_images import fetch_missing_images
 
 SUPABASE_URL = os.environ["SUPABASE_URL"]
 SUPABASE_KEY = os.environ["SUPABASE_KEY"]
@@ -118,6 +119,9 @@ def main():
 
         print("\n=== 生成今日 AI 要点综合 ===")
         generate_daily_digest()
+
+        print("\n=== 抓取文章封面图 ===")
+        fetch_missing_images(batch_size=40)
 
     print("\n爬虫运行完成 ✓")
 

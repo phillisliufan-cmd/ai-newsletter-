@@ -49,7 +49,7 @@ export type Article = {
   id: string
   title: string
   url: string
-  source: 'hackernews' | 'paperswithcode' | 'github'
+  source: string
   summary_zh: string | null
   category: string | null
   tags: string[] | null
@@ -58,6 +58,7 @@ export type Article = {
   created_at: string
   is_featured: boolean
   is_published: boolean
+  image_url: string | null
 }
 
 export type UserProfile = {
