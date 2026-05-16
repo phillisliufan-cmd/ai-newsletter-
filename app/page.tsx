@@ -9,29 +9,32 @@ export const dynamic = 'force-dynamic';
 
 async function getFeaturedArticles() {
   const supabase = createAnonClient();
-  // 取最近100篇，前端按"有图优先 + 高分"混排
+  // 只取最近 7 天的文章
+  const since = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
   const { data, error } = await supabase
     .from("articles")
     .select("*")
-    .order("created_at", { ascending: false })
-    .limit(100);
+    .gte("created_at", since)
+    .order("score", { ascending: false })
+    .limit(60);
   if (error) console.error("[getFeaturedArticles] error:", error);
   const articles = data || [];
+  // 有图的排前面，无图的补后面
   const withImage = articles.filter((a) => a.image_url && a.image_url.startsWith("http"));
-  const withoutImage = articles.filter((a) => !a.image_url || !a.image_url.startsWith("http"))
-    .sort((a, b) => b.score - a.score);
-  // 最多4张有图 + 填满到7篇
-  const result = [...withImage.slice(0, 4), ...withoutImage].slice(0, 7);
-  return result;
+  const withoutImage = articles.filter((a) => !a.image_url || !a.image_url.startsWith("http"));
+  return [...withImage, ...withoutImage].slice(0, 7);
 }
 
 async function getLatestArticles() {
   const supabase = createAnonClient();
+  // 最近 3 天、有图片的文章，按时间倒序
+  const since = new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString();
   const { data } = await supabase
     .from("articles")
     .select("*")
+    .gte("created_at", since)
     .order("created_at", { ascending: false })
-    .limit(40);
+    .limit(60);
   return (data || []).filter((a) => a.image_url && a.image_url.startsWith("http")).slice(0, 4);
 }
 
