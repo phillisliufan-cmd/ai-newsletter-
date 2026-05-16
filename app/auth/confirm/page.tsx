@@ -21,7 +21,7 @@ function ConfirmContent() {
         if (data.session) {
           setStatus("success");
           setMessage("邮箱验证成功！");
-          setTimeout(() => router.push("/"), 2000);
+          setTimeout(() => { window.location.href = "/"; }, 2000);
         } else {
           setStatus("error");
           setMessage("链接无效或已过期，请重新注册。");
@@ -39,7 +39,7 @@ function ConfirmContent() {
         } else {
           setStatus("success");
           setMessage("邮箱验证成功！");
-          setTimeout(() => router.push("/"), 2000);
+          setTimeout(() => { window.location.href = "/"; }, 2000);
         }
       });
   }, [searchParams, router]);
