@@ -176,7 +176,7 @@ export default async function HomePage() {
       </section>
 
       <footer className="border-t border-gray-100 py-8 text-center text-xs text-gray-400">
-        <p>AI Newsletter · 由 Claude API 驱动 · 数据来自 HackerNews / arXiv / Reddit 等15+来源</p>
+        <p>AI Newsletter · 每日精选 AI 资讯</p>
       </footer>
     </main>
   );
