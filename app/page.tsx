@@ -20,14 +20,14 @@ async function getFeaturedArticles() {
 
 async function getLatestArticles() {
   const supabase = createAnonClient();
+  // 取最近文章，前端再过滤有图的
   const { data } = await supabase
     .from("articles")
     .select("*")
-    .not("image_url", "is", null)
-    .neq("image_url", "")
     .order("created_at", { ascending: false })
-    .limit(4);
-  return data || [];
+    .limit(40);
+  // 只保留有真实图片的
+  return (data || []).filter((a) => a.image_url && a.image_url.startsWith("http")).slice(0, 4);
 }
 
 async function getTodayDigest() {
