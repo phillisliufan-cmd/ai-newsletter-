@@ -125,13 +125,9 @@ export default function ArticleCard({ article, featured = false, large = false }
           />
         </div>
       ) : (
-        <div className={`bg-gradient-to-br ${gradient} ${large ? "h-48" : "h-32"} w-full flex items-center justify-center`}>
-          <span className="text-4xl opacity-30 select-none">
-            {article.category === "LLM" ? "🧠" :
-             article.category === "视觉" ? "👁️" :
-             article.category === "工具" ? "🔧" :
-             article.category === "研究" ? "📄" :
-             article.category === "应用" ? "⚡" : "📡"}
+        <div className={`bg-gradient-to-br ${gradient} ${large ? "h-48" : "h-32"} w-full flex items-end justify-start px-5 pb-3`}>
+          <span className="text-xs font-semibold uppercase tracking-widest opacity-40 text-gray-600 select-none">
+            {article.category || article.source}
           </span>
         </div>
       )}
