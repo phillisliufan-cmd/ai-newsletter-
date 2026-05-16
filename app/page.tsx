@@ -171,7 +171,6 @@ export default async function HomePage() {
           <div className="flex justify-center">
             <SubscribeForm />
           </div>
-          <p className="text-xs text-gray-400 mt-4">无垃圾邮件，随时退订</p>
         </div>
       </section>
 
