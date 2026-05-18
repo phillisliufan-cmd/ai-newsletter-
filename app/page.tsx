@@ -1,4 +1,4 @@
-import { createAnonClient } from "@/lib/supabase";
+import { createAnonClient, createServiceClient } from "@/lib/supabase";
 import ArticleCard from "@/components/ArticleCard";
 import SubscribeForm from "@/components/SubscribeForm";
 import Navbar from "@/components/Navbar";
@@ -46,7 +46,7 @@ async function getLatestArticles() {
 }
 
 async function getTodayDigest() {
-  const supabase = createAnonClient();
+  const supabase = createServiceClient();
   const { data } = await supabase
     .from("daily_digests")
     .select("*")
