@@ -14,7 +14,9 @@ type Props = {
 export default function DailyDigest({ digest }: Props) {
   if (!digest) return null;
 
-  const dateStr = new Date(digest.date).toLocaleDateString("zh-CN", {
+  // 手动解析日期避免时区偏移（"2026-05-18" 不加时区会被当作 UTC 零点）
+  const [year, month, day] = digest.date.split("-").map(Number);
+  const dateStr = new Date(year, month - 1, day).toLocaleDateString("zh-CN", {
     month: "long",
     day: "numeric",
     weekday: "long",
