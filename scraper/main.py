@@ -114,14 +114,23 @@ def main():
     print(f"\n总计写入 {total_inserted} 篇新内容")
 
     if not args.no_process:
-        print("\n=== Claude AI 处理 ===")
-        process_unanalyzed_articles(batch_size=20)
+        try:
+            print("\n=== Claude AI 处理 ===")
+            process_unanalyzed_articles(batch_size=20)
+        except Exception as e:
+            print(f"[警告] Claude 处理失败，跳过: {e}")
 
-        print("\n=== 生成今日 AI 要点综合 ===")
-        generate_daily_digest()
+        try:
+            print("\n=== 生成今日 AI 要点综合 ===")
+            generate_daily_digest()
+        except Exception as e:
+            print(f"[警告] 生成今日要点失败，跳过: {e}")
 
-        print("\n=== 抓取文章封面图 ===")
-        fetch_missing_images(batch_size=40)
+        try:
+            print("\n=== 抓取文章封面图 ===")
+            fetch_missing_images(batch_size=40)
+        except Exception as e:
+            print(f"[警告] 抓取封面图失败，跳过: {e}")
 
     print("\n爬虫运行完成 ✓")
 
