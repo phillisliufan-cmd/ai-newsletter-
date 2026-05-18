@@ -9,13 +9,13 @@ export const dynamic = 'force-dynamic';
 
 async function getFeaturedArticles() {
   const supabase = createAnonClient();
-  // 只取最近 7 天的文章
-  const since = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
+  // 只取最近 3 天的文章，优先最新
+  const since = new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString();
   const { data, error } = await supabase
     .from("articles")
     .select("*")
     .gte("created_at", since)
-    .order("score", { ascending: false })
+    .order("created_at", { ascending: false })
     .limit(60);
   if (error) console.error("[getFeaturedArticles] error:", error);
   const articles = data || [];
