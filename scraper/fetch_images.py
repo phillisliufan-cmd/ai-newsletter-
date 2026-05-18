@@ -44,6 +44,12 @@ _unsplash_cache: dict[str, list[str]] = {}
 _unsplash_index: dict[str, int] = {}
 
 
+def picsum_fallback(article_id: str) -> str:
+    """用 picsum.photos 随机图，按 id 固定，同一文章每次相同"""
+    seed = abs(hash(article_id)) % 1000
+    return f"https://picsum.photos/seed/{seed}/800/450"
+
+
 def unsplash_search(query: str) -> Optional[str]:
     """用 Unsplash API 搜索图片，轮换返回不同结果"""
     if not UNSPLASH_KEY:
@@ -132,6 +138,10 @@ def get_image_for_article(article: dict) -> Optional[str]:
         )
         img = unsplash_search(query)
 
+    # 最后兜底 → picsum 随机图
+    if not img:
+        img = picsum_fallback(article.get("id", article.get("url", "")))
+
     return img
 
 
@@ -142,7 +152,7 @@ def fetch_missing_images(batch_size: int = 50):
     resp = (
         sb.table("articles")
         .select("id, url, source, category, tags")
-        .is_("image_url", "null")
+        .or_("image_url.is.null,image_url.eq.")
         .order("created_at", desc=True)
         .limit(batch_size)
         .execute()
