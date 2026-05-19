@@ -69,21 +69,35 @@ export default async function HomePage() {
     <main className="min-h-screen bg-white">
       <Navbar />
 
-      {/* 顶部栏 */}
-      <section className="border-b border-gray-100">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+      {/* Hero — 左标题 + 右要点 */}
+      <section className="border-b border-gray-100 bg-[#f8f7f4]">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+          {/* 左：标题 */}
           <div>
-            <span className="text-sm font-semibold text-gray-900">每日 AI 精选</span>
-            <span className="text-sm text-gray-400 ml-2">· 来自 15+ 来源的最新 AI 动态</span>
+            <h1 className="text-5xl sm:text-6xl font-extrabold text-gray-950 leading-tight tracking-tight">
+              今日<br />AI 精选
+            </h1>
+            <p className="text-gray-400 mt-4 text-sm">
+              每天自动聚合 15+ 来源<br />由 Claude AI 生成中文摘要
+            </p>
+            <Link href="/browse" className="inline-block mt-6 text-sm text-gray-500 hover:text-gray-800 transition-colors">
+              浏览全部资讯 →
+            </Link>
           </div>
-          <Link href="/browse" className="text-sm text-blue-600 hover:text-blue-700 font-medium transition-colors">
-            浏览全部资讯 →
-          </Link>
+
+          {/* 右：今日要点列表 */}
+          {digest && digest.key_points && digest.key_points.length > 0 && (
+            <div>
+              {digest.key_points.map((point, i) => (
+                <div key={i} className="flex gap-4 py-4 border-t border-gray-200 first:border-t-0">
+                  <span className="text-xs text-gray-400 font-mono mt-0.5 w-4 shrink-0">{String(i + 1).padStart(2, '0')}</span>
+                  <p className="text-sm text-gray-700 leading-relaxed">{point}</p>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
-
-      {/* 今日 AI 要点 */}
-      <DailyDigest digest={digest} />
 
       {/* 今日精选 */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
