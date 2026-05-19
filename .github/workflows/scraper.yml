@@ -36,7 +36,7 @@ jobs:
       - name: 发送每日邮件
         run: |
           curl -X POST "${{ secrets.VERCEL_URL }}/api/digest" \
-            -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
+            -H "x-admin-email: ${{ secrets.ADMIN_EMAIL }}" \
             -H "Content-Type: application/json" \
             --fail \
             && echo "邮件发送成功" || echo "邮件发送失败（可能无订阅者）"
