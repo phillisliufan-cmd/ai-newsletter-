@@ -2,7 +2,6 @@ import { createAnonClient, createServiceClient } from "@/lib/supabase";
 import ArticleCard from "@/components/ArticleCard";
 import SubscribeForm from "@/components/SubscribeForm";
 import Navbar from "@/components/Navbar";
-import DailyDigest from "@/components/DailyDigest";
 import Link from "next/link";
 
 export const dynamic = 'force-dynamic';
