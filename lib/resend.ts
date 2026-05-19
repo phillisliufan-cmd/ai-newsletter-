@@ -79,21 +79,24 @@ export async function sendDailyDigest(
   const html = buildEmailHtml(articles, dateStr)
 
   try {
-    // Resend 免费版每次最多 50 收件人，分批发送
-    const resend = getResend()
-    const FROM_EMAIL = getFromEmail()
-    const batchSize = 50
-    let sentCount = 0
+    const nodemailer = await import('nodemailer')
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.GMAIL_USER,
+        pass: process.env.GMAIL_APP_PASSWORD,
+      },
+    })
 
-    for (let i = 0; i < recipients.length; i += batchSize) {
-      const batch = recipients.slice(i, i + batchSize)
-      await resend.emails.send({
-        from: FROM_EMAIL,
-        to: batch,
+    let sentCount = 0
+    for (const to of recipients) {
+      await transporter.sendMail({
+        from: `AI Newsletter <${process.env.GMAIL_USER}>`,
+        to,
         subject: `今日AI精选 · ${dateStr}`,
         html,
       })
-      sentCount += batch.length
+      sentCount++
     }
 
     return { success: true, sentCount }
