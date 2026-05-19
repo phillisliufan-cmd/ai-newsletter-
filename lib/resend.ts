@@ -1,16 +1,6 @@
-import { Resend } from 'resend'
 import { Article } from './supabase'
 import { format } from 'date-fns'
 import { zhCN } from 'date-fns/locale'
-
-// 懒加载避免构建期缺少环境变量时报错
-function getResend() {
-  return new Resend(process.env.RESEND_API_KEY!)
-}
-
-function getFromEmail() {
-  return process.env.RESEND_FROM_EMAIL || 'digest@yourdomain.com'
-}
 
 const SOURCE_LABELS: Record<string, string> = {
   hackernews: 'Hacker News',
