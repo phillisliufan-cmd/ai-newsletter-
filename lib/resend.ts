@@ -6,6 +6,20 @@ const SOURCE_LABELS: Record<string, string> = {
   hackernews: 'Hacker News',
   paperswithcode: 'Papers With Code',
   github: 'GitHub Trending',
+  openai: 'OpenAI',
+  deepmind: 'DeepMind',
+  huggingface: 'HuggingFace',
+  microsoft: 'Microsoft AI',
+  venturebeat: 'VentureBeat',
+  techcrunch: 'TechCrunch',
+  theverge: 'The Verge',
+  mit_review: 'MIT Tech Review',
+  arstechnica: 'Ars Technica',
+  simon_willison: 'Simon Willison',
+  tldr_ai: 'TLDR AI',
+  import_ai: 'Import AI',
+  ai_news: 'AI News',
+  arxiv: 'arXiv',
 }
 
 const CATEGORY_COLORS: Record<string, string> = {
@@ -20,39 +34,52 @@ function buildEmailHtml(articles: Article[], date: string): string {
   const articleItems = articles
     .map((a) => {
       const categoryColor = CATEGORY_COLORS[a.category || ''] || '#6b7280'
-      const tags = (a.tags || []).map((t) => `<span style="background:#1f2937;color:#9ca3af;padding:2px 8px;border-radius:4px;font-size:12px;margin-right:4px;">${t}</span>`).join('')
+      const sourceLabel = SOURCE_LABELS[a.source] || a.source
+      const image = a.image_url && a.image_url.startsWith('http')
+        ? `<img src="${a.image_url}" alt="" style="width:100%;height:180px;object-fit:cover;border-radius:8px;margin-bottom:14px;display:block;">`
+        : ''
       return `
-      <div style="border:1px solid #1f2937;border-radius:12px;padding:20px;margin-bottom:16px;background:#111827;">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
-          <span style="background:${categoryColor};color:#fff;padding:2px 10px;border-radius:20px;font-size:12px;font-weight:600;">${a.category || '未分类'}</span>
-          <span style="color:#6b7280;font-size:12px;">${SOURCE_LABELS[a.source] || a.source}</span>
-          ${a.score > 0 ? `<span style="color:#6b7280;font-size:12px;">热度 ${a.score}</span>` : ''}
+      <div style="border-bottom:1px solid #e5e7eb;padding:24px 0;">
+        ${image}
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+          <span style="background:${categoryColor}18;color:${categoryColor};padding:2px 10px;border-radius:20px;font-size:11px;font-weight:600;letter-spacing:0.5px;">${a.category || '资讯'}</span>
+          <span style="color:#9ca3af;font-size:12px;">${sourceLabel}</span>
         </div>
-        <a href="${a.url}" style="color:#7c3aed;font-size:16px;font-weight:600;text-decoration:none;line-height:1.4;">${a.title}</a>
-        <p style="color:#d1d5db;font-size:14px;line-height:1.6;margin:10px 0;">${a.summary_zh || '暂无摘要'}</p>
-        <div style="margin-top:8px;">${tags}</div>
+        <a href="${a.url}" style="color:#111827;font-size:17px;font-weight:700;text-decoration:none;line-height:1.4;display:block;margin-bottom:8px;">${a.title}</a>
+        <p style="color:#6b7280;font-size:14px;line-height:1.7;margin:0 0 12px;">${a.summary_zh || '暂无摘要'}</p>
+        <a href="${a.url}" style="color:#2563eb;font-size:13px;font-weight:500;text-decoration:none;">阅读原文 →</a>
       </div>`
     })
     .join('')
 
-  return `
-<!DOCTYPE html>
+  return `<!DOCTYPE html>
 <html>
-<head><meta charset="utf-8"><title>今日AI精选</title></head>
-<body style="background:#0a0a0a;color:#e5e7eb;font-family:'Inter',sans-serif;max-width:600px;margin:0 auto;padding:24px;">
-  <div style="text-align:center;padding:32px 0 24px;">
-    <h1 style="font-size:28px;font-weight:800;color:#fff;margin:0;">
-      今日AI精选 · <span style="color:#7c3aed;">${date}</span>
-    </h1>
-    <p style="color:#6b7280;margin-top:8px;">精选 ${articles.length} 篇 AI 资讯，为你节省信息筛选时间</p>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>今日AI精选</title></head>
+<body style="background:#f9fafb;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;">
+  <div style="max-width:600px;margin:0 auto;background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.08);">
+
+    <!-- 顶部 header -->
+    <div style="background:#ffffff;padding:32px 40px 20px;border-bottom:1px solid #e5e7eb;">
+      <div style="font-size:20px;font-weight:800;color:#111827;letter-spacing:-0.5px;">AI Newsletter</div>
+      <div style="font-size:13px;color:#9ca3af;margin-top:4px;">${date} · 每日精选 AI 资讯</div>
+    </div>
+
+    <!-- 文章列表 -->
+    <div style="padding:8px 40px 24px;">
+      ${articleItems}
+    </div>
+
+    <!-- 底部 footer -->
+    <div style="background:#f9fafb;padding:24px 40px;border-top:1px solid #e5e7eb;text-align:center;">
+      <p style="color:#9ca3af;font-size:12px;margin:0;line-height:1.6;">
+        你收到此邮件是因为订阅了 AI Newsletter<br>
+        <a href="https://ai-newsletter-six-pi.vercel.app" style="color:#2563eb;text-decoration:none;">访问网站</a>
+        &nbsp;·&nbsp;
+        <a href="https://ai-newsletter-six-pi.vercel.app" style="color:#9ca3af;text-decoration:none;">退订</a>
+      </p>
+    </div>
+
   </div>
-  <hr style="border-color:#1f2937;margin-bottom:24px;">
-  ${articleItems}
-  <hr style="border-color:#1f2937;margin-top:24px;">
-  <p style="text-align:center;color:#4b5563;font-size:12px;padding:16px 0;">
-    你收到此邮件是因为订阅了 AI Newsletter。
-    <a href="${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/unsubscribe?email={{email}}" style="color:#7c3aed;">退订</a>
-  </p>
 </body>
 </html>`
 }
