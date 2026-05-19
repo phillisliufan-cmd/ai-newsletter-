@@ -69,19 +69,16 @@ export default async function HomePage() {
     <main className="min-h-screen bg-white">
       <Navbar />
 
-      {/* Hero */}
-      <section className="border-b border-gray-100 bg-gradient-to-b from-blue-50/40 to-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-16 pb-14 text-center">
-          <h1 className="font-heading text-5xl sm:text-6xl font-extrabold text-gray-900 leading-tight mb-8 tracking-tight">
-            精选 AI 资讯<br />
-            <span className="text-gradient">每日送达</span>
-          </h1>
-
-          <div className="flex items-center justify-center">
-            <Link href="/browse" className="btn-primary text-base px-8 py-3">
-              浏览全部资讯 →
-            </Link>
+      {/* 顶部栏 */}
+      <section className="border-b border-gray-100">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+          <div>
+            <span className="text-sm font-semibold text-gray-900">每日 AI 精选</span>
+            <span className="text-sm text-gray-400 ml-2">· 来自 15+ 来源的最新 AI 动态</span>
           </div>
+          <Link href="/browse" className="text-sm text-blue-600 hover:text-blue-700 font-medium transition-colors">
+            浏览全部资讯 →
+          </Link>
         </div>
       </section>
 
