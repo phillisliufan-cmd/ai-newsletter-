@@ -87,7 +87,7 @@ export default async function HomePage() {
           {/* 右：今日要点列表 */}
           {digest && digest.key_points && digest.key_points.length > 0 && (
             <div>
-              {digest.key_points.map((point, i) => (
+              {digest.key_points.map((point: string, i: number) => (
                 <div key={i} className="flex gap-4 py-4 border-t border-gray-200 first:border-t-0">
                   <span className="text-xs text-gray-400 font-mono mt-0.5 w-4 shrink-0">{String(i + 1).padStart(2, '0')}</span>
                   <p className="text-sm text-gray-700 leading-relaxed">{point}</p>
