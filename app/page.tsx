@@ -76,12 +76,6 @@ export default async function HomePage() {
             <h1 className="text-5xl sm:text-6xl font-extrabold text-gray-950 leading-tight tracking-tight">
               今日<br />AI 精选
             </h1>
-            <p className="text-gray-400 mt-4 text-sm">
-              每天自动聚合 15+ 来源<br />由 Claude AI 生成中文摘要
-            </p>
-            <Link href="/browse" className="inline-block mt-6 text-sm text-gray-500 hover:text-gray-800 transition-colors">
-              浏览全部资讯 →
-            </Link>
           </div>
 
           {/* 右：今日要点列表 */}
