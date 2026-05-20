@@ -170,7 +170,7 @@ export default async function HomePage() {
             每日 AI 精选，直送邮箱
           </h2>
           <p className="text-gray-500 mb-8 max-w-lg mx-auto">
-            每天早上 9 点，精选10篇最新 AI 资讯，配中文摘要，5分钟了解AI前沿动态。
+            每天美国东部时间早上 9 点，精选10篇最新 AI 资讯，配中文摘要，5分钟了解AI前沿动态。
           </p>
           <div className="flex justify-center">
             <SubscribeForm />
