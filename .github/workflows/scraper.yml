@@ -2,8 +2,8 @@ name: 每日 AI 爬虫
 
 on:
   schedule:
-    # 每天 UTC 00:00 = 北京时间 08:00
-    - cron: '0 0 * * *'
+    # 每天 UTC 14:00 = 美国东部时间 09:00 AM（夏令时）
+    - cron: '0 14 * * *'
   workflow_dispatch: # 允许手动触发
 
 jobs:
