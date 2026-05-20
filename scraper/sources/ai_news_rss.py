@@ -18,6 +18,9 @@ RSS_SOURCES = [
     {"url": "https://deepmind.google/blog/rss.xml",                                  "source": "deepmind",    "label": "DeepMind Blog"},
     {"url": "https://huggingface.co/blog/feed.xml",                                  "source": "huggingface", "label": "HuggingFace Blog"},
     {"url": "https://blogs.microsoft.com/ai/feed/",                                  "source": "microsoft",   "label": "Microsoft AI Blog"},
+    {"url": "https://ai.meta.com/blog/rss/",                                         "source": "meta_ai",     "label": "Meta AI Blog"},
+    {"url": "https://blog.google/technology/ai/rss/",                                "source": "google_ai",   "label": "Google AI Blog"},
+    {"url": "https://www.anthropic.com/rss.xml",                                     "source": "anthropic",   "label": "Anthropic Blog"},
 
     # === 科技媒体 AI 频道 ===
     {"url": "https://venturebeat.com/category/ai/feed/",                             "source": "venturebeat", "label": "VentureBeat AI"},
@@ -25,7 +28,17 @@ RSS_SOURCES = [
     {"url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",     "source": "theverge",    "label": "The Verge AI"},
     {"url": "https://www.technologyreview.com/feed/",                                "source": "mit_review",  "label": "MIT Tech Review"},
     {"url": "https://www.technologyreview.com/topic/artificial-intelligence/feed",   "source": "mit_review",  "label": "MIT Tech Review AI"},
-    {"url": "https://feeds.arstechnica.com/arstechnica/ai",                          "source": "arstechnica", "label": "Ars Technica AI"},
+    {"url": "https://feeds.arstechnica.com/arstechnica/index.xml",                   "source": "arstechnica", "label": "Ars Technica"},
+    {"url": "https://feeds.feedburner.com/ndtv/BqmB",                               "source": "wired_ai",    "label": "Wired AI"},
+
+    # === 财经 & AI 公司动态 ===
+    {"url": "https://feeds.reuters.com/reuters/technologyNews",                      "source": "reuters",     "label": "Reuters Technology"},
+    {"url": "https://www.cnbc.com/id/19854910/device/rss/rss.html",                 "source": "cnbc",        "label": "CNBC Technology"},
+    {"url": "https://finance.yahoo.com/rss/headline?s=NVDA",                        "source": "yahoo_fin",   "label": "Yahoo Finance NVDA"},
+    {"url": "https://finance.yahoo.com/rss/headline?s=MSFT",                        "source": "yahoo_fin",   "label": "Yahoo Finance MSFT"},
+    {"url": "https://finance.yahoo.com/rss/headline?s=GOOGL",                       "source": "yahoo_fin",   "label": "Yahoo Finance GOOGL"},
+    {"url": "https://finance.yahoo.com/rss/headline?s=META",                        "source": "yahoo_fin",   "label": "Yahoo Finance META"},
+    {"url": "https://finance.yahoo.com/rss/headline?s=AMD",                         "source": "yahoo_fin",   "label": "Yahoo Finance AMD"},
 ]
 
 NS = {
