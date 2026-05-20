@@ -70,7 +70,7 @@ export default async function HomePage() {
 
       {/* Hero — 左标题 + 右要点 */}
       <section className="border-b border-gray-100 bg-[#f8f7f4]">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* 左：标题 */}
           <div>
             <h1 className="text-5xl sm:text-6xl font-extrabold text-gray-950 leading-tight tracking-tight">
