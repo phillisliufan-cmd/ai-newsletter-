@@ -19,15 +19,17 @@ export async function POST(request: NextRequest) {
 
   const supabase = createServiceClient()
 
-  // 查询过去 24 小时已发布文章，按 score 取前 10
-  const since = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString()
+  // 查询过去 48 小时已发布且有中文摘要的文章，按时间取前 10
+  const since = new Date(Date.now() - 48 * 60 * 60 * 1000).toISOString()
 
   const { data: articles, error: articlesError } = await supabase
     .from('articles')
     .select('*')
     .eq('is_published', true)
     .gte('created_at', since)
-    .order('score', { ascending: false })
+    .not('summary_zh', 'is', null)
+    .neq('summary_zh', '')
+    .order('created_at', { ascending: false })
     .limit(10)
 
   if (articlesError) {
