@@ -19,10 +19,10 @@ export async function POST(request: NextRequest) {
 
   const supabase = createServiceClient()
 
-  // 查询过去 48 小时已发布且有中文摘要的文章，按时间取前 10
+  // 查询过去 48 小时已发布且有中文摘要的文章，多取一些再做多样性筛选
   const since = new Date(Date.now() - 48 * 60 * 60 * 1000).toISOString()
 
-  const { data: articles, error: articlesError } = await supabase
+  const { data: rawArticles, error: articlesError } = await supabase
     .from('articles')
     .select('*')
     .eq('is_published', true)
@@ -30,15 +30,24 @@ export async function POST(request: NextRequest) {
     .not('summary_zh', 'is', null)
     .neq('summary_zh', '')
     .order('created_at', { ascending: false })
-    .limit(10)
+    .limit(80)
 
   if (articlesError) {
     return NextResponse.json({ error: articlesError.message }, { status: 500 })
   }
 
-  if (!articles || articles.length === 0) {
-    return NextResponse.json({ message: '过去24小时没有新文章', sentCount: 0 })
+  if (!rawArticles || rawArticles.length === 0) {
+    return NextResponse.json({ message: '过去48小时没有新文章', sentCount: 0 })
   }
+
+  // 每个来源最多 2 篇，保证多样性，最终取 10 篇
+  const sourceCount: Record<string, number> = {}
+  const articles = rawArticles.filter((a) => {
+    const count = sourceCount[a.source] || 0
+    if (count >= 2) return false
+    sourceCount[a.source] = count + 1
+    return true
+  }).slice(0, 10)
 
   // 获取所有订阅用户
   const { data: profiles, error: profilesError } = await supabase
