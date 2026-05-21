@@ -26,8 +26,6 @@ RSS_SOURCES = [
     {"url": "https://venturebeat.com/category/ai/feed/",                             "source": "venturebeat", "label": "VentureBeat AI"},
     {"url": "https://techcrunch.com/category/artificial-intelligence/feed/",         "source": "techcrunch",  "label": "TechCrunch AI"},
     {"url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",     "source": "theverge",    "label": "The Verge AI"},
-    {"url": "https://www.technologyreview.com/feed/",                                "source": "mit_review",  "label": "MIT Tech Review"},
-    {"url": "https://www.technologyreview.com/topic/artificial-intelligence/feed",   "source": "mit_review",  "label": "MIT Tech Review AI"},
     {"url": "https://feeds.arstechnica.com/arstechnica/index.xml",                   "source": "arstechnica", "label": "Ars Technica"},
     {"url": "https://feeds.feedburner.com/ndtv/BqmB",                               "source": "wired_ai",    "label": "Wired AI"},
 

@@ -23,6 +23,24 @@ from fetch_images import fetch_missing_images
 SUPABASE_URL = os.environ["SUPABASE_URL"]
 SUPABASE_KEY = os.environ["SUPABASE_KEY"]
 
+# 需要付费会员才能阅读的域名，直接过滤
+PAYWALL_DOMAINS = [
+    "wsj.com",
+    "ft.com",
+    "bloomberg.com",
+    "nytimes.com",
+    "technologyreview.com",
+    "theatlantic.com",
+    "economist.com",
+    "businessinsider.com",
+    "seekingalpha.com",
+    "barrons.com",
+    "forbes.com/subscribe",
+]
+
+def is_paywalled(url: str) -> bool:
+    return any(domain in url for domain in PAYWALL_DOMAINS)
+
 
 def upsert_articles(sb: Client, articles: list[dict]) -> int:
     """写入文章，忽略 URL 冲突（已存在则跳过）"""
@@ -30,7 +48,11 @@ def upsert_articles(sb: Client, articles: list[dict]) -> int:
         return 0
 
     rows = []
+    skipped = 0
     for a in articles:
+        if is_paywalled(a["url"]):
+            skipped += 1
+            continue
         rows.append({
             "title": a["title"],
             "url": a["url"],
@@ -38,6 +60,8 @@ def upsert_articles(sb: Client, articles: list[dict]) -> int:
             "score": a.get("score", 0),
             "published_at": a.get("published_at"),
         })
+    if skipped:
+        print(f"  [过滤] 跳过 {skipped} 篇付费墙文章")
 
     try:
         resp = (
